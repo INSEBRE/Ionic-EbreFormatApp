@@ -1,0 +1,142 @@
+<html ng-app="ionicApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>Tot Formació - L'aplicació per a formar-te a les Terres de l'Ebre.</title>
+
+    <!--<link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+    <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+
+</head>
+
+<body ng-controller="MyCtrl">
+<ion-header-bar class="bar-default">
+
+    <div class="button ion-chevron-left button-clear button-dark"
+         ng-show="items[0].training_resource_parentResourceId"
+         ng-click="updateList(last_item);id=false"> Enrere
+    </div>
+
+    <a href="index.html" class="button ion-chevron-left button-clear button-dark"
+       ng-hide="items[0].training_resource_parentResourceId"
+       ng-click="updateList(last_item)"> <span class="network-name">Home</span>
+    </a>
+
+    <h1 class="title" ng-if="!id">Formacions</h1>
+
+    <h1 class="title" ng-if="id">{{last_item_name}}</h1>
+
+
+</ion-header-bar>
+
+<ion-content class="padding">
+
+    <ion-refresher on-refresh="updateList(actual_item)"></ion-refresher>
+
+    <ion-list class="list list-inset" ng-hide="id">
+
+        <div ng-repeat="item in items">
+            <ion-item class="item-stable item-thumbnail-left item-text-wrap" item="item"
+                      ng-click="updateList(item.training_resource_id,item.training_resource_parentResourceId)">
+
+                <img class="img-responsive" src="http://178.62.75.243/images/{{ item.training_resource_thumbnail }}"
+                     alt="{{ item.training_resource_name }} Photo">
+
+                <li class="row">
+                    <div class="col col-80">
+                        <h2>{{ item.training_resource_name }}</h2>
+
+                        <p align="justify"> {{item.training_resource_description | limitTo: 150}}
+                            {{item.training_resource_description.length >150 ? '&hellip;' : '' }}</p>
+                    </div>
+
+                    <div class="col">
+                        <div>
+                            <div class="botonera">
+                                <button class="button button-positive icon ion-information-circled"
+                                        ng-click="itemInfo(item);item.training_resource_parentResourceId=true;$event.stopPropagation()">
+                                </button>
+                                <button class="button button-dark icon ion-link"
+                                        ng-click="openLink(item.training_resource_external_url);$event.stopPropagation()"
+                                        ng-show="item.training_resource_external_url">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ion-item>
+        </div>
+    </ion-list>
+
+
+    <ion-list class="list list-inset">
+
+        <div ng-show="id">
+            <ion-item class="item-stable item-thumbnail-left item-text-wrap" item="item">
+
+                <img class="img-responsive" src="http://178.62.75.243/images/{{itemData.training_resource_thumbnail}}"
+                     alt="{{ itemData.training_resource_name }} Photo">
+
+                <h2>{{ itemData.training_resource_name }}</h2>
+
+                <p align="justify"> {{ itemData.training_resource_description}}
+
+                </p>
+            </ion-item>
+
+        </div>
+
+    </ion-list>
+
+
+</ion-content>
+
+
+</body>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-inline">
+                    <li>
+                        <a href="index.html#">Home</a>
+                    </li>
+                    <li class="footer-menu-divider">&sdot;</li>
+                    <li>
+                        <a href="index.html#about">Qui som?</a>
+                    <li class="footer-menu-divider">&sdot;</li>
+
+                    </li>
+                    <li>
+                        <a href="index.html#partners">Col·laboradors</a>
+                    <li class="footer-menu-divider">&sdot;</li>
+                    </li>
+                    <li>
+                        <a href="index.html#contact">Contacta'ns</a>
+                    <li class="footer-menu-divider">&sdot;</li>
+                    </li>
+                    <li>
+                        <a href="http://178.62.75.243/admin">Administrador</a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted small">&copy; 2015 <a href="http://www.iesebre.com/">Institut de
+                    l'Ebre</a> &sdot; Creat per <a href="http://acacha.org/sergitur/">Sergi Tur</a> i
+                    Nicolae Țurcan</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>
